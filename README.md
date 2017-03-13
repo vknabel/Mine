@@ -13,24 +13,20 @@ let goldmine = Mine<Gold>() // declare your mine
  )
 ```
 
-### Shaft
-A protocol describing factories of *Rails*.
-### Mine
-Your program. Is a Shaft.
-### Drift
-A special form of a Shaft, that parses raw ore (`[String]`) into minerals.
-### Ore
-The arguments passed to your program.
-### Lore
-An event wrapper around minerals.
-### Mineral
-The desired mineral of your mine.
-### Rail
-Transports your filled Lores.
-A simple typealias for *Observables* of *Lores*.
-### Elevator
-The fastest connection to the outside. A Rx wrapper around print and read line.
+### Terminology
 
+| Name     | Type        | Description                                                                     |
+|----------|-------------|---------------------------------------------------------------------------------|
+| Ore      | -           | The arguments passed to your program.                                           |
+| Mineral  | -           | The desired mineral of your mine.                                               |
+| Lore     | -           | An event wrapper around minerals.                                               |
+| Rail     | `Rail`      | Transports your filled Lores. A simple typealias for *Observables* of *Lores*.  |
+| Shaft    | `ShaftType` | A protocol describing factories of *Rails*.                                     |
+| Drift    | `Drift`     | A concrete Shaft. Usually parses raw ore (`[String]`) into minerals.            |
+| Mine     | `Mine`      | Your program. Is a Shaft.                                                       |
+| Elevator | `Elevator`  | The fastest connection to the outside. A Rx wrapper around print and read line. |
+
+### Elevator
 The idea behind the elevator is to make your CLI embeddable as library without any changes.
 ```swift
 let ele = Elevator<String, String>()
