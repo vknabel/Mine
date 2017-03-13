@@ -1,4 +1,7 @@
-# CommandMine
+<p align="center">
+    <img src="Assets/Logo.png" width="480" max-width="90%" alt="Mine" />
+</p>
+
 Command mine is a swift library for parsing command line arguments. It is designed to support asynchronous implementations of CLIS, that may even be used inside frameworks.
 
 ## Definitions
