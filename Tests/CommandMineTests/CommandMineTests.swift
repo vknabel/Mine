@@ -1,11 +1,11 @@
 import XCTest
-@testable import CommandMine
+@testable import Mine
 
-class CommandMineTests: XCTestCase {
+class MineTests: XCTestCase {
     func testExample() {
         // This is an example of a functional test case.
         // Use XCTAssert and related functions to verify your tests produce the correct results.
-        XCTAssertEqual(CommandMine().text, "Hello, World!")
+        XCTAssertEqual(Mine().text, "Hello, World!")
     }
 
 

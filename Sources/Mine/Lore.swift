@@ -56,6 +56,17 @@ public extension Lore {
     }
   }
 
+  public func flatMap<Gold>(transform: @escaping (Mineral) -> Rail<Gold>) -> Rail<Gold> {
+    switch self {
+    case let .success(intermediate):
+      return transform(intermediate)
+    case let .usage(instructions):
+      return .of(.usage(instructions))
+    case let .error(cause):
+      return .of(.error(cause))
+    }
+  }
+
   public func flatMapUsage(transform: @escaping (Usage) -> Lore<Mineral>) -> Lore<Mineral> {
     switch self {
     case let .success(intermediate):
@@ -67,12 +78,34 @@ public extension Lore {
     }
   }
 
+  public func flatMapUsage(transform: @escaping (Usage) -> Rail<Mineral>) -> Rail<Mineral> {
+    switch self {
+    case let .success(intermediate):
+      return .of(.success(intermediate))
+    case let .usage(instructions):
+      return transform(instructions)
+    case let .error(cause):
+      return .of(.error(cause))
+    }
+  }
+
   public func flatMapError(transform: @escaping (Error) -> Lore<Mineral>) -> Lore<Mineral> {
     switch self {
     case let .success(intermediate):
       return .success(intermediate)
     case let .usage(instructions):
       return .usage(instructions)
+    case let .error(cause):
+      return transform(cause)
+    }
+  }
+
+  public func flatMapError(transform: @escaping (Error) -> Rail<Mineral>) -> Rail<Mineral> {
+    switch self {
+    case let .success(intermediate):
+      return .of(.success(intermediate))
+    case let .usage(instructions):
+      return .of(.usage(instructions))
     case let .error(cause):
       return transform(cause)
     }

@@ -1,27 +1,27 @@
-public typealias FlatMapMineTransformation<Mine: MineType, Mineral> = (Mine.Mineral) -> Rail<Mineral>
+public typealias FlatMapMineTransformation<Ore, Mineral, Gold> = (Mineral) -> Rail<Gold>
 
-fileprivate final class FlatMapMine<Mine: MineType, Mineral>: MineType {
-  typealias Transformation = FlatMapMineTransformation<Mine, Mineral>
+fileprivate final class FlatMapMine<Ore, Mineral, Gold>: MineType {
+  typealias Transformation = FlatMapMineTransformation<Ore, Mineral, Gold>
   let transform: Transformation
-  let mine: Mine
+  let mine: Mine<Ore, Mineral>
 
-  init(mine: Mine, transform: @escaping Transformation) {
-    self.mine = mine
+  init<SomeMine: MineType>(mine: SomeMine, transform: @escaping Transformation) where SomeMine.Ore == Ore, SomeMine.Mineral == Mineral {
+    self.mine = mine.asMine()
     self.transform = transform
   }
 
-  func mine(_ ore: Mine.Ore) -> Rail<Mineral> {
+  func mine(_ ore: Ore) -> Rail<Gold> {
     return mine.mine(ore)
-      .map { $0.flatMap(transform: self.transform) }
+      .flatMap { $0.flatMap(transform: self.transform) }
   }
 }
 
 public extension MineType {
-  public func flatMap<Gold>(transform: @escaping FlatMapMineTransformation<Self, Gold>) -> Mine<Self.Ore, Gold> {
+  public func flatMap<Gold>(transform: @escaping FlatMapMineTransformation<Ore, Mineral, Gold>) -> Mine<Ore, Gold> {
     return FlatMapMine(mine: self, transform: transform).asMine()
   }
 
-  public func flatMap<Gold>(transform: @escaping (Mineral) -> Lore<Mineral>) -> Mine<Self.Ore, Gold> {
+  public func flatMap<Gold>(transform: @escaping (Mineral) -> Lore<Gold>) -> Mine<Ore, Gold> {
     return FlatMapMine(mine: self, transform: { .of(transform($0)) }).asMine()
   }
 

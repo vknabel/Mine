@@ -1,4 +1,4 @@
-public typealias MapUsageMineTransformation<Mine: MineType> = (Lore<Mine.Mineral>.Usage) -> Rail<Mine.Mineral>.Usage
+public typealias MapUsageMineTransformation<Mine: MineType> = (Lore<Mine.Mineral>.Usage) -> Lore<Mine.Mineral>.Usage
 
 fileprivate final class MapUsageMine<Mine: MineType>: MineType {
   typealias Transformation = MapUsageMineTransformation<Mine>
