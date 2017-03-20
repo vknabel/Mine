@@ -1,6 +1,6 @@
-public typealias FlatMapUsageDriftTransformation<Drift: Shaft> = (Lore<Drift.Mineral>.Usage) -> Rail<Drift.Mineral>
+public typealias FlatMapUsageDriftTransformation<Drift: MineType> = (Lore<Drift.Mineral>.Usage) -> Rail<Drift.Mineral>
 
-fileprivate final class FlatMapUsageDrift<Drift: Shaft>: Shaft {
+fileprivate final class FlatMapUsageDrift<Drift: MineType>: MineType {
   typealias Transformation = FlatMapUsageDriftTransformation<Drift>
   let transform: Transformation
   let drift: Drift
@@ -16,7 +16,7 @@ fileprivate final class FlatMapUsageDrift<Drift: Shaft>: Shaft {
   }
 }
 
-public extension Shaft {
+public extension MineType {
   public func flatMapUsage(transform: @escaping FlatMapUsageDriftTransformation<Self>) -> Drift<Self.Ore, Self.Mineral> {
     return FlatMapUsageDrift(drift: self, transform: transform).asDrift()
   }

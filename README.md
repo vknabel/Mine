@@ -11,8 +11,8 @@ CommandMine is about extracting minerals out of your ore.
 let goldmine = Mine<Gold>() // declare your mine
  .drift( // One way to get to your gold
   named: "init",
-  digging drift: Drift, // Prepares your Shaft
-  to shaft: execute // your actual program
+  prepare: Drift, // Prepares your Mine
+  for goldMine: execute // your actual program
  )
 ```
 
@@ -24,9 +24,9 @@ let goldmine = Mine<Gold>() // declare your mine
 | Mineral  | -           | The desired mineral of your mine.                                               |
 | Lore     | -           | An event wrapper around minerals.                                               |
 | Rail     | `Rail`      | Transports your filled Lores. A simple typealias for *Observables* of *Lores*.  |
-| Shaft    | `ShaftType` | A protocol describing factories of *Rails*.                                     |
-| Drift    | `Drift`     | A concrete Shaft. Usually parses raw ore (`[String]`) into minerals.            |
-| Mine     | `Mine`      | Your program. Is a Shaft.                                                       |
+| MineType | `MineType`  | A protocol describing factories of *Rails*.                                     |
+| Drift    | `Drift`     | A concrete MineType. Usually parses raw ore (`[String]`) into minerals.         |
+| Mine     | `Mine`      | Your program. Is a MineType.                                                    |
 | Elevator | `Elevator`  | The fastest connection to the outside. A Rx wrapper around print and read line. |
 
 ### Elevator

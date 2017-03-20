@@ -1,6 +1,6 @@
-public typealias FlatMapErrorDriftTransformation<Drift: Shaft> = (Lore<Drift.Mineral>.Error) -> Rail<Drift.Mineral>
+public typealias FlatMapErrorDriftTransformation<Drift: MineType> = (Lore<Drift.Mineral>.Error) -> Rail<Drift.Mineral>
 
-fileprivate final class FlatMapErrorDrift<Drift: Shaft>: Shaft {
+fileprivate final class FlatMapErrorDrift<Drift: MineType>: MineType {
   typealias Transformation = FlatMapErrorDriftTransformation<Drift>
   let transform: Transformation
   let drift: Drift
@@ -16,12 +16,12 @@ fileprivate final class FlatMapErrorDrift<Drift: Shaft>: Shaft {
   }
 }
 
-public extension Shaft {
+public extension MineType {
   public func flatMapError(transform: @escaping FlatMapErrorDriftTransformation<Self>) -> Drift<Self.Ore, Self.Mineral> {
     return FlatMapErrorDrift(drift: self, transform: transform).asDrift()
   }
 
-  public func flatMapError<AnyDrift: Shaft>(to drift: AnyDrift) -> Drift<Ore, Mineral>
+  public func flatMapError<AnyDrift: MineType>(to drift: AnyDrift) -> Drift<Ore, Mineral>
   where AnyDrift.Ore == Ore, AnyDrift.Mineral == Mineral {
     return Drift { ore in
       self.flatMapError { _ in drift.mine(ore) }

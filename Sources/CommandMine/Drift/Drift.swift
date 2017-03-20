@@ -1,4 +1,4 @@
-public final class Drift<Ore, Mineral>: Shaft {
+public final class Drift<Ore, Mineral>: MineType {
   public typealias MineShaft = (Ore) -> Rail<Mineral>
 
   private let mineShaft: MineShaft

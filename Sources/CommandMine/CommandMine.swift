@@ -13,7 +13,7 @@ extension Observable {
 public typealias Rail<Mineral> = Observable<Lore<Mineral>>
 
 /// Describes factories of `Rail`s.
-public protocol Shaft {
+public protocol MineType {
   associatedtype Ore
   associatedtype Mineral
 
@@ -22,13 +22,13 @@ public protocol Shaft {
   func asDrift() -> Drift<Ore, Mineral>
 }
 
-public extension Shaft {
+public extension MineType {
   func asDrift() -> Drift<Ore, Mineral> {
     return Drift(fromMineShaft: self.mine)
   }
 }
 
-public struct Mine<Gold>: Shaft {
+public struct Mine<Gold>: MineType {
   public typealias Ore = [String]
   public typealias Mineral = Gold
 
@@ -40,7 +40,7 @@ public struct Mine<Gold>: Shaft {
   // (Ore) -> Never
 }
 
-public struct Elevator<Ore, Mineral> { // no shaft but subject
+public struct Elevator<Ore, Mineral> { // no mine but subject
   // Observer<Lore<Mineral>>
   // Rail<Ore>
 }

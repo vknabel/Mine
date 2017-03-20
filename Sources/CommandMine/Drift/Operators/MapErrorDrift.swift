@@ -1,6 +1,6 @@
-public typealias MapErrorDriftTransformation<Drift: Shaft> = (Lore<Drift.Mineral>.Error) -> Rail<Drift.Mineral>.Error
+public typealias MapErrorDriftTransformation<Drift: MineType> = (Lore<Drift.Mineral>.Error) -> Rail<Drift.Mineral>.Error
 
-fileprivate final class MapErrorDrift<Drift: Shaft>: Shaft {
+fileprivate final class MapErrorDrift<Drift: MineType>: MineType {
   typealias Transformation = MapErrorDriftTransformation<Drift>
   let transform: Transformation
   let drift: Drift
@@ -16,7 +16,7 @@ fileprivate final class MapErrorDrift<Drift: Shaft>: Shaft {
   }
 }
 
-public extension Shaft {
+public extension MineType {
   public func mapError(transform: @escaping MapErrorDriftTransformation<Self>) -> Drift<Self.Ore, Self.Mineral> {
     return MapErrorDrift(drift: self, transform: transform).asDrift()
   }

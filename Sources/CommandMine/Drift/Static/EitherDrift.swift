@@ -1,5 +1,5 @@
-public extension Shaft {
-  public static func either<LeftDrift: Shaft, RightDrift: Shaft>(
+public extension MineType {
+  public static func either<LeftDrift: MineType, RightDrift: MineType>(
     left: LeftDrift,
     right: RightDrift
   ) -> Drift<LeftDrift.Ore, LeftDrift.Mineral>
